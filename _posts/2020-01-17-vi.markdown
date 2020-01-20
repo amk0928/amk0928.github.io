@@ -1,0 +1,137 @@
+---
+layout: post
+title:  "vi tutorial"
+date:   2020-01-17 10:00:00 +0900
+author: 지민규
+categories: Rookie7
+---
+## vi를 배워야 하는 이유
+1. 리눅스 시스템 설정을 할 때
+2. 서버 로그를 볼 때
+
+## vi
+* Switching Mode로 작동.
+* 명령모드, 입력/편집모드, Ex모드(저장, 종료, Replace)
+
+## customization
+* number 라인 옆에 숫자가 나옴. => set nu[mber]
+* 한글 깨짐 => :set encoding=utf-8
+
+## Cursor
+* 화살표키, HJKL(좌하상우)
+* 단어단위 이동 -> W,w(단어 앞으로) / B,b(뒤로) / E,e(단어 제일 끝 문자 앞으로)
+* 라인 처음에서 이동하고 싶으면 + / -
+* 라인의 처음과 끝 : 0 / $
+* 페이지 절반 이동 -> ctrl+d / ctrl+u
+* 페이지 전체 이동 -> ctrl+f / ctrl+b => 많이 씀
+* 페이지의 중간, 위, 아래 : M, H, L
+* 파일의 시작과 끝 : :0, gg, [[  / G, ]] => 많이 씀
+* 원하는 라일 : :라인
+
+## 입력/편집
+* 커서에서 insert : i => i만 있어도 가능함.
+* 해당 줄의 첫번째 : I
+* 커서에서 append: a
+* 해당 줄의 가장 뒤 : A
+* 다음 줄 : o
+* 앞 줄에 추가 : O
+<br>
+* 한 줄 지움 : cc
+* 한 단어 지움 : cw
+* 한 줄 지움 : C
+    => `모두 editor 모드로 변경`
+<br>
+* 해당 커서 글자 바꿈 : r
+<br>
+* 한 줄 삭제 : dd
+* 한 단어 삭제 : dw
+* 한 줄 삭제 후 : D
+* 한 글자 삭제 : x
+  => `모두 command 모드에 남아 있음`
+<br>
+* undo : U
+* redo : ctrl + r
+<br>
+*  커서에서 4글자를 지움 :4dw
+* 현재 커서부터 파일끝까지 삭제 : dG
+* 커서에서 5글자 삭제 : 5x
+
+* repetition : `.`
+    *  가장 마지막에 했던 명령어 반복
+<br>
+* 아래로 스트링 탐색 : /
+* 위로 스트링 탐색 : ?
+* 다음 찾기/이전찾기 : n/N
+
+## EX 모드
+* : 으로 이동하고, esc로 커맨드모드로 다시 돌아감
+* 저장하고 나가기 : wq
+* 저장하지 않고 나가기 : q!
+* 저장 : w 파일이름
+<br>
+* Reload : e, edit, e!, edit! => 로그 분석을 위해 켰는데, 새로운 로그를 확인할 때 많이 씀
+<br>
+* Replace(파일 전체에 대해 특정 단어 치환) : %s/고치고싶은 단어/고칠단어
+    * 옵션
+        1. 바꿀지 물어보는 것 : c
+        2. 대소문자 구분없이 : i
+        3. 하나의 단어에 여러개의 반복 문자 치환 : g
+    * 현재 행부터 마지막 행까지 치환 : .,$s/string/replace
+<br>
+* shell script 입력할 수 있도록 command로 : shell
+* 위 상태에서 다시 vi로 돌아가기 : exit
+    * :!ls 와 같이도 사용 가능함.
+<br>
+* shell command 결과를 현재 파일 버퍼 내부로 가져오기 : r !cmd! => r !ls , ls 결과를 덧붙임
+<br>
+* 창 가로 분할 : sp
+* 창 세로 분할 : vs
+* 창 이동 : 컨트롤+ w, w
+    * 컨트롤+w, h/j/k/l 로 상하좌우 이동 가능
+* 창 끄기 : q, qa(전체 닫기)
+
+* 북마크 :
+  * :라인넘버
+  * 북마크 : ma, mb, mc ...  (콜론 없이)
+  * 북마크로 이동 : \`a, \`b, \`c (콜론 없이)
+  * 북마크까지 삭제하고 싶을 때 : d, \`a
+
+* 복사 : yy
+* 붙여넣기 : p
+  * 북마크부터 현재까지 복사 : y\`a,
+
+## visual block
+* v로 시작, V는 라인별로 block
+* 현재까지 block 삭제 : d
+* 현재까지 block 복사 : y
+
+## Costomization
+* auto indent : set ai
+* smart indent, if문 indent : set si
+* c언어 indent : set cindent
+* 붙여넣기 시 code indent 망가질 때 : set paste 
+<br>
+* ai 옵션 삭제 : set noai 
+<br>
+* 현재까지 모드 확인 : :set
+<br>
+* tabstop
+    * :set ts=4 : \t문자의 폭
+    * :set sts=4 TAB키 입력시의 폭
+    * :set sw=4 자동 줄 맞추기 폭
+    * :set expandtab : 탭을 스페이스바로 치환해서 들어감
+<br>
+* 문법 강조 하이라이트 :syntax on
+<br>
+* matching braces : set showmatch
+* search
+    * 검색결과 하이라이트 : set hlsearch
+    * 기본으로 대소문자 안가리기 : set ignorecase
+    * 기본으로 대소문자 가리기 : set smartcase
+<br>
+* 설정 고정하기
+    * 홈 디렉토리에 .vimrc에서 명령어를 넣어주면 됨.
+<br>
+
+## 느낀점
+어떤 기능이 있다는 것만 알면 그것을 기반으로 검색해서 사용할 수 있기 때문에 오늘 배우는 vi 단축키를 다 외울 필요는 없다고 하셨다. vi를 크게 많이 사용하진 않을 것 같지만 사용할 때 유용하게 사용할 수 있도록 잘 배운 것 같다.

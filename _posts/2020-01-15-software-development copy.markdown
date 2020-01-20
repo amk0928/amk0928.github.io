@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "기민한 소프트웨어 개발"
-date:   2020-01-16 17:00:00 +0900
+title:  "기민한 소프트웨어 개발과 일정 추정"
+date:   2020-01-15 09:30:00 +0900
 author: 지민규
 categories: Rookie7
 ---
