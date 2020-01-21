@@ -23,6 +23,12 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap ## Uncomment this line to silently generate a sitemaps.org compliant sitemap for your Jekyll site
 
+kramdown:
+  input: GFM
+  syntax_highlighter_pts:
+    default_lang: html
+    css_class   : 'syntax'
+
 comments:
 # Disqus comments
   disqus_shortname: mingyus-blog
