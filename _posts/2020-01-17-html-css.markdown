@@ -387,3 +387,7 @@ categories: Rookie7
 * 다양한 해상도를 지원해줄 수 없다.
 * 웹 폰트 라이브러리를 사용하면 벡터 방식이기 때문에 아이콘이 깨지지 않음.
     * font-awesome, google material
+
+
+## 참고
+* NHN Basecamp

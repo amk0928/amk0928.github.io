@@ -357,3 +357,6 @@ element.nextSibling // 다음 형제
 element.previousSibling  // 이전 형제
 element.childNodes // 자식들을 모두 담고 있는 HTMLCollection
 ```
+
+## 참고
+* NHN Basecamp
