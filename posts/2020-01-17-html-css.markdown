@@ -1,0 +1,393 @@
+---
+layout: post
+title:  "HTML/CSS 기초"
+date:   2020-01-17 14:00:00 +0900
+author: 지민규
+categories: Rookie7
+---
+## 웹의 구성 요소
+
+* HTML : 구조나 내용. 내용을 서술하고 정의
+* CSS : 모양과 표현. 모양을 추가하거나 변경, 디자인을 입히는 개념
+* JS : 기능과 액선. 동작을 추가, 데이터 로드, 팝업창 열기 등
+
+## 웹 표준
+
+* W3C에서 권고한 표준.
+* 웹 접근성 : 물리적 또는 인적 환경에 제약없는 접근성, 마우스 또는 키보드가 없는 환경, 시각적으로 문제가 있는 상황
+=> 인적 환경의 제약은 장애인에만 해당하는 내용이 아님. ex) 사고가 나서 시각적 제한이 있는 사람
+* 웹 호환성 : 브라우저 버전, 종류에 관계없는 접근성
+
+## HTML 엘리먼트 구성 요소
+
+``` html
+<!DOCTYPE html>
+<html>
+<head>
+ <title>HTML/CSS</title>
+</head>
+<body>
+ <h1>구조와 내용</h1>
+ <ul>
+ <li>HTML 문서에 대한 정보</li>
+ <li>내용을 서술하고 정의</li>
+ </ul>
+</body>
+</html>
+```
+
+* 여는 태그, 닫는 태그, 어트리뷰트, 내용
+    * 실제로 보이는 부분은 내용만
+* DOCTYPE : 브라우저가 문서를 해석하는 방법.
+    * <!DOCTYPE html>
+        * 생략하면 쿽스 모드(quirks mode)로 렌더링
+        * 브라우저마다 렌더링 방식이 다름.
+        * 크로스 브라우징 문제 발생
+* html 태그
+    * lang 속성: 웹 접근성을 준수하기 위함. 검색(SEO)과 음성장치에서 활용
+* head 태그
+    * html 문서에 대한 정보를 나타내는 태그
+* meta 태그
+    * Viewport는 미디어 쿼리를 위해 사용(반응형으로 보여주기 위해)
+    * Open Graph Protocol
+        * Facebook에서 만든 meta tag. 페이지에 대한 요약 정보
+        * 이미지는 절대경로로
+    * 문서에 대한 정보 요약, 인코딩, 저자, 대표 이미지 등. 사용자에게 보이지 않음
+* title 태그 : 브라우저의 제목을 표시하는 태그
+
+``` html
+<title> Title </title>
+```
+
+* body 태그
+    * 문서에서 사용자에게 보이는 부분
+
+``` html
+<body>
+
+</body>
+```
+
+* h1\~h6태그
+    * 제목이나 부제목을 표현. 크기별로 사용함
+
+``` html
+<h1>H1</h1>
+<h2>H1</h2>
+<h3>H1</h3>
+<h4>H1</h4>
+<h5>H1</h5>
+<h6>H1</h6>
+```
+
+* p 태그
+    * paragraph의 약자로 일반적인 텍스트의 단락을 표현.
+    * 줄바꿈
+
+``` html
+<p>paragraph</p>
+```
+
+* ol. li 태그
+    * 순서가 있는 리스트를 표현.
+
+``` html
+<ol>
+   <li>list1</li>
+   <li>list2</li>
+</ol>
+```
+
+* ul, li 태그
+    * 순서가 없는 리스트를 표현.
+    * 중간에 또 ul을 넣어서 계층 구조로 표현 가능.
+
+``` html
+<ul>
+   <li>list1</li>
+   <li>list2</li>
+</ul>
+```
+
+* strong, em 태그
+    * 강조 표현. strong은 굵게, em은 기울임
+
+``` html
+ <strong>strong</strong>
+ <em>em</em>
+```
+
+* blockquote 태그
+    * 인용구 표현
+    * css 스타일 적용해서 사용을 함.
+* pre 태그
+    * 미리 지정된 서식 그대로 표현
+    * code block을 만들 때 주로 사용함
+* code 태그
+    * monospace 글꼴로 표현
+    * 마찬가지로 code block을 만들때 주로 사용함. 글자별 자간이 모두 똑같음
+* a 태그
+    * href : 이동할 주소
+    * target : \_blank하면 새창, default는 창 이동
+
+``` html
+ <a hreh="#">link </a>
+```
+
+* img 태그
+    * src 이미지 경로
+    * alt : 이미지가 보이지 않을때 나타낼 텍스트
+
+``` html
+ <img src="path/to/image" alt="text"/>
+```
+
+* div 태그
+    * division의 약자로 영역을 나눌 때 사용
+    * display 속성이 block
+    * 한 줄을 가득 채움
+
+``` html
+ <div>
+ 
+ </div>
+```
+
+## Semantic Element
+
+* 의미를 가지고 있는 엘리먼트
+* div랑 같은 역할임.
+* header, section, footer 등이 있음.
+* 개발자의 가독성이 좋아짐
+* 검색 엔진이 논리적으로 필요한 부분을 찾기 쉬움
+* section : 하나의 주제로 묶을 수 있는 것들.
+
+``` html
+<header>header</header>
+<main>
+ <section>
+ section
+ <article>section</article>
+ </section>
+ <aside>section</aside>
+</main>
+<footer>footer</footer>
+```
+
+## CSS 기본 구조와 셀렉터
+
+* Cascading Style Sheet : 문서의 표현을 기술하는 스타일시트 언어
+* 셀렉터, 속성, 값이 있음. 속성이 끝날 때는 세미콜론, 속성과 값은 콜론
+* inline, embedded, externel
+* inline : 태그에 style을 줘서 스타일을 적용할 수 있음. 우선순위가 높기 때문에 상속 면에서 좋지 않음.
+
+``` html
+<div style="display: none;"></div>
+```
+
+* embedded : head 안에 style 태그에 스타일을 적용. 페이지 내에 css가 간단한 경우에 사용함.
+
+``` html
+<head>
+ <style>
+ div {display: none;}
+ </style>
+</head>
+```
+
+* external : 별도의 css 파일로 분리하여, link로 연결. 가장 일반적인 방법.
+
+``` html
+<link rel="stylesheet" href="../src/css/index.css">
+```
+
+## CSS 상속
+
+* 부모 엘리먼트에 적용된 스타일이 자식 엘리먼트에도 적용됨.
+    * 상속이 되는 속성 : visibility, opacity, font, coloer, line-height ...
+    * 상속되지 않는 속성 : margin, padding, border, width, height ...
+
+``` html
+<div style="color: yellow;">
+ <div></div> <!-- 이 div에도 color:yellow가 적용됨 -->
+</div>
+```
+
+## CSS 셀렉터
+
+* CSS를 적용할 요소를 지칭
+* id : id는 unique. 만들기가 가능은 한데, js 할 때 못찾음
+* class는 여러개 가능
+* tag 셀렉터 : 해당 tag에 모두 적용
+* id 셀렉터 : #id로 선택. 우선순위 때문에 쓰지 않는게 좋음. 우선순위가 너무 높음.
+* class 셀렉터 : .class로 선택. 가장 많이 쓰이는 셀렉터
+* 속성 셀렉터 : [type="button"]와 같이 [속성명="값"] 형태로 선택
+* 부모 자식 관계
+* html 문서는 부모와 자식 관계가 있음.
+* 두 셀렉터 간에 공백이 없으면 and 조건임.
+* 자손 셀렉터 : 부모와 자손을 선택 시 공백 사용. 여러개의 셀렉터를 적용할 때 콤마로 구분. 부모 아래 있는 모든 태그가 선택
+    * header h1, header h2 => header 아래 있는 h1, h2
+* 자식 셀렉터 : 부모와 자식 선택시 꺽쇠 사용. 바로 밑에 있는 자식 태그만 선택됨
+    * header > h1
+* 형제 셀렉터 : 태그1 + 태그2. 태그1 바로 뒤에 있는 태그2를 선택됨.
+    * 뒤에 오는 모든 형제 선택시 태그1 \~ 태그2
+* 전체 셀렉터 : 하위의 모든 셀렉터를 선택시 \* 사용.
+    * header \* : header 아래의 모든 자식. 성능이 안좋아짐.
+* 유사 클래스 셀렉터
+    * 엘리먼트가 특별한 상태일 때 선택
+    * 마우스가 올라가 있거나, 선택되어 있거나 등
+    * header > p:hover : header 아래 p태그에 마우스가 올라가면
+    * .box:not(:first-child) => 첫 번째만 빼고 다 선택
+* 유사 엘리먼트 셀렉터
+    * 존재하는 엘리먼트가 없는 가상의 요소 선택
+    * 문자열을 지정할 수 있는 content 속성과 함께 사용
+    * 콜론 두개와 함께 사용. 한개로도 가능하지만 권장하지 않음
+    * ::first-letter, ::first--line 등.
+    * div::before { content: "앞", coler : ... } 와 같이 div 앞에 글자도 넣고, 스타일도 넣을 수 있음.
+    * 가상 요소기 때문에 블록 지정도 되지 않음
+
+## 셀렉터 우선순위
+
+* 클래스 셀렉터 > 태그 셀렉터
+* 셀렉터 우선 순위 동등 -> 나중에 선언된 스타일 적용
+* inline : 1000, ID : 100,클래스, 속성, 유사클래스 : 10, 태그, 유사 엘리먼트 : 1점
+
+## CSS 박스 모델
+
+* Margin : 바깥 여백
+* Border : 테두리
+* Padding : 안쪽 여백
+* Content : 내용
+* background-clip : 배경을 채워줄 범위를 지정.
+    * border-box : 테두리 영억까지
+    * padding-box : 안쪽 여백부터, 테두리 제외
+    * content-box : 안쪽 여백을 제외한 내용 부분만
+    * text : 텍스트 위로만
+* box-sizing
+    * content-box : 내용을 기준으로 엘리먼트 크기를 잡음. width, height를 content 기준으로.
+    * border-box : 테두리를 모두 포함해서 엘리먼트 크기를 잡음.
+* width, height : 엘리먼트 크기를 지정할 때.
+    * width: 100% => 부모 요소의 너비를 가득 채움.
+    * max-width : 300px => 부모 요소를 가득채우지 않고, 300px까지만
+    * width : auto => content 너비까지만.
+    * min-width: 300px 내용이 적어도 최소 300px는 채움
+* margin : 바깥 여백을 지정
+    * 한개 값 : 상하좌우
+    * 두개 값 : 상하 좌우
+    * 세개 값 : 상 좌우 하
+    * 네개 값 : 상, 우, 하, 좌
+    * margin-top, bottom, left, right도 가능
+* padding : 안쪽 여백을 지정
+    * margin과 동일하게 들어감.
+* border : 테두리 지정
+    * border 만 있으면 테두리가 들어감. border: solid. 기본은 1px, 검은색
+        * border: 두께 스타일 색상 으로 들어감. 순서 상관 없음
+    * border-top, bottom, left, right와 같이 방향별 지정 가능
+
+## CSS display
+
+* 각 태그는 한 가지 display 속성을 가짐.
+* p 태그는 한 줄씩 차지. -> block
+* span은 크기만큼만 가짐 -> inline
+* block : 한 줄을 차지
+    * width, height, margin, padding 모두 적용
+    * margin : x auto 를 통해 가로 가운데 정렬 가능.
+* inline : 여러 요소가 한 행에 있을 수 있음
+    * width, height, margin의 top, bottom 동작 안함
+    * content 길이 만큼 wdith를 가짐.
+    * 부모 엘리먼트의 text-align: center로 가운데 정렬
+* inline-block : 여러 요소와 같이 한 행에 있을 수 있음.
+    * margin, padding, width, height 모두 적용
+    * 부모 엘리먼트의 text-align도 가능.
+* none : 해당 요소를 화면에서 보이지 않게 함
+    * visibility: hidden과의 차이는 엘리먼트의 영역을 유지해주느냐의 차이.
+    * none은 영역을 유지해주지 않음.
+
+## CSS Flexible 박스
+
+* 모든 모던 브라우저에서 지원.
+* 성능 면에서도 렌더링 시간이 빨라짐
+* container에 display: flex를 줌.
+    * flex를 주면 가로 배치.
+    * flex-direction에 row, column을 주면 각각 가로, 세로 방향으로 배치
+    * flex: 숫자 => 숫자 비율만큼 공간 차지.
+    * flex: none => 원래 지정된 공간 차지
+        * 나머지 크기는 나머지 flex가 비율로 차지
+
+## 가로 정렬과 세로 정렬
+
+* block의 가로 정렬
+    * margin으로 가로 정렬. margin: 0 auto
+* inline의 가로 정렬
+    * text-align
+* inline의 세로 정렬
+    * line-height를 parent와 맞춰줌.
+
+## flex 가로 / 세로 정렬
+
+* justify-content : flex direction과 같은 방향을 정렬
+* align-items : flex direction과 수직 방향을 정렬
+* justify-content
+    * flex-start : 시작으로 정렬
+    * center : 가운데 정렬
+    * flex-end : 끝으로 정렬
+* align-items
+    * justify-content와 동일
+* 정 가운데 정렬은 둘 다 center로 지정
+
+## 포지션과 오버플로우
+
+* 포지션 : 엘리먼트를 배치하는 방법
+    * 디폴트 : static
+    * left, right, top, bottom이 적용되지 않음.
+* relative
+    * left. right. top, bottom을 주면 원래 위치를 기준으로 이동함.
+* absolute
+    * 기준 점이 되는 것이 relative를 가지고 있는 상위 엘리먼트를 기준으로 함.
+* fixed
+    * transform 속성 값을 가진 가장 가까운 상위 엘리먼트를 기준으로 위치함.
+    * transform이 없으면 전체 화면을 기준으로 위치함.
+* 오버플로우 : 자식 엘리먼트가 부모 엘리먼트 영역을 넘어갈 때 어떻게 보여줄지
+    * visible, 디폴트 : 그대로 보여줌.
+    * hidden : 넘치는 것들을 가림
+    * scroll : 항상 스크롤이 보임
+    * auto : 내용이 넘치는 경우만 스크롤이 생김
+* text-overflow
+    * ellipsis라는 속성을 주면 말 줄임.
+    * overflow: hidden, white-space: nowrap도 같이 써줘야 함.
+    * white-space: nowrap -> 글이 쭉 일자로만 써짐.
+* z-index
+    * position이 static이 아닌 값으로 설정되어 있어야 함.
+    * index가 클 수록 위에 올라감.
+
+## 글자 속성
+
+* 글자크기 표현 단위
+    * px : 화소단위
+    * em : 부모 요소 글자 크기의 기준 배율
+    * rem : HTML 글자 크기 기준 배율
+    * pt : 글꼴에 많이 쓰임
+    * % : 기본 글꼴의 상대적인 크기
+    * vw, vh : 뷰포트 기준 크기
+* font 적용하기
+    * font\-style : 화소 단위\, Normal \| Italic \| oblique
+    * 필요한 속성 하나씩 적용
+    * font 속성으로 한번에 적용도 가능.
+    * 웹 폰트
+        * 컴퓨터의 글꼴이 없을 경우 웹 폰트를 통해서 다운받게 할 수 있음.
+        * 서버 폰트를 사용하는 경우 => font-face로 사용
+        * 외부 폰트 리소스는 링크 태그 혹인 css의 import를 통해 받을 수 있음.
+
+## 이미지 스프라이트
+
+* 이미지가 많이 사용되면 이미지 다운로드 요청이 많아지면서 로딩이 오래걸림.
+* 이미지를 하나로 합쳐서 관리. 하나의 이미지만 다운로드
+* div를 두고, 배경 이미지를 지정 한 후, position을 옮겨서 해당 div에 맞춤.
+* 여백도 포함이기 때문에 이미지 용량이 늘어날 수 있다.
+* 다양한 해상도를 지원해줄 수 없다.
+* 웹 폰트 라이브러리를 사용하면 벡터 방식이기 때문에 아이콘이 깨지지 않음.
+    * font-awesome, google material
+
+
+## 참고
+* NHN Basecamp
