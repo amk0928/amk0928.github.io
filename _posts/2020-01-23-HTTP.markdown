@@ -1,0 +1,784 @@
+---
+layout: post
+title:  "HTTP의 이해"
+date:   2020-01-13 18:00:00 +0900
+categories: Rookie7
+---
+
+# HTTP (Hypertext Transfer Protocol)
+
+## HTTP (Hypertext Transfer Protocol)
+
+* Application-level protocol
+* Transfer Protocol
+* Hypertext
+
+## Application-level protocol
+
+### OSI Model
+
+* OSI Model 에서의 최상위 level의 protocol
+
+## Transfer Protocol
+
+* header, control
+    * 어디로 보낼 것인지에 대한 정보
+* payload, body, data
+    * 어떤 것을 보낼 지에 대한 정보
+* Ethernet
+    * Ethernet header + Ethernet payload
+* IP
+    * Ethernet header + IP Header + IP payload
+* TCP
+    * Ethernet header + IP Header + TCP Header + TCP payload
+
+# WEB
+
+## www (World Wide Web)
+
+* 1989년 3월 CERN에 근무중이던 팀 버너스리 외 몇명의 과학자들의 제안으로 시작
+* 초기에 Mesh로 불리던 것을 1990년 구현 과정에서 World Wide Web으로 이름을 바꿈
+
+## 구성요소
+
+* HTML
+    * 하이퍼텍스트 문서를 표현하기 위한 텍스트 형식의 하이퍼텍스트 마크업 언어
+* HTTP
+    * 문서 같은 것을 교환하기 위한 간단한 프로토콜인 하이퍼텍스트 전송 프로토콜
+* WorldWideWeb (Web Browser)
+    * 문서를 디스플레이 하기 위한 월드 와이드 웹이라고 불리는 첫 번째 브라우저
+* Httpd
+    * 문서에 접근하도록 해주는 웹 서버의 초기 버전
+* Web Browser가 Web Server로 문서(HTML)을 요청하고
+* Web Server는 요청 받은 문서 (HTML)를 응답(HTTP) 하면
+* Web Browser가 응답받은 문서(HTML)를 화면에 표현하는 것
+
+## URL
+
+* 네트워크 상에서 자원이 어디 있는지를 알려주기 위한 규약
+* RFC 1738 : Uniform Resource Locators
+
+```
+scheme:[//[user:password@]host[:port]][/]path[?query][#fragment]
+```
+
+## HTML
+
+HyperText Markup Language
+
+* 즉시 다른 텍스트 레퍼런스에 접근 가능
+    * 링크를 가지고 있다.
+* 표, 이미지 외 기타 표현 가능한 컨텐츠를 포함
+* HyperText를 만들 수 있는 마크업 언어(Markup Language)
+* Sample
+
+``` HTML
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello, Rookies</title>
+    </head>
+    <body>
+        <h3> Hello </h3>
+        <p> Hello, Rookies. </p>
+        <p>
+            <a href="http://www.nhn.com">
+                <img src="images/nhn_logo.png" />
+            </a>
+        </p>
+    </body>
+</html>
+```
+
+## HTTP
+
+* HyperText를 클라이언트와 서버 사이에 주고 받을 수 있게 정의한 프로토콜
+* TCP/IP 프로토콜 위에서 동작하는 Text Based 프로토콜
+    * 사람이 눈으로 보고 이해 가능
+* Connectionless, Stateless
+
+## 웹 브라우저의 요청
+
+```
+http://127.0.0.1:10000/hello.html
+```
+
+### Demo
+
+* 서버
+
+```
+$ nc -l 10000
+```
+
+* 클라이언트
+
+```
+nc 127.0.0.1:1000
+```
+
+### Request
+
+``` http
+GET /hello.html HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding: gzip, deflate, br
+Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7
+```
+
+## 웹 서버의 응답
+
+### demo
+
+```
+$ python -m SimpleHTTPServer 11000
+
+$ nc 127.0.0.1 11000
+GET /hello.html HTTP/1.1
+Host: 127.0.0.1:11000
+
+$ curl -i http://127.0.0.1:11000/hello.html
+```
+
+### response
+
+``` http
+HTTP/1.0 200 OK
+Server: SimpleHTTP/0.6 Python/2.7.16
+Date: Wed, 23 Jan 2019 01:31:56 GMT
+Content-type: text/html
+Content-Length: 309
+Last-Modified: Wed, 23 Jan 2019 01:30:43 GMT
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello, Rookies</title>
+    </head>
+    <body>
+        <h3> Hello </h3>
+        <p> Hello, Rookies. </p>
+        <p>
+            <a href="http://www.nhn.com">
+                <img src="images/logo_footer.png" />
+            </a>
+        </p>
+    </body>
+</html>
+```
+
+### Proxy 툴
+
+* Fiddler : https://www.telerik.com/fiddler
+* Charles : https://www.charlesproxy.com
+
+## 요청(Request)
+
+```
+Request-Line
+*(( general-header | request-header | entity-header ) CRLF)
+CRLF
+[ message-body ]
+```
+
+### 요청의 구성
+
+```
+{메서드} {요청 URL} {버전}
+{헤더}
+
+{메세지 본문}
+```
+
+### Sample
+
+``` http
+GET /hello.html HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding: gzip, deflate, br
+Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7
+```
+
+## Request 첫 줄
+
+### Request-Line
+
+```
+{메서드} {요청 URL} {버전}
+GET /hello.html HTTP/1.1
+```
+
+### 메서드
+
+* RFC 7231
+    * GET
+    * HEAD
+    * POST
+    * PUT
+    * DELETE
+    * CONNECT
+    * OPTIONS
+    * TRACE
+* PATCH
+
+### 요청 URL
+
+* /hello.html
+
+### 버전
+
+```
+HTTP/<메이저>.<마이너>
+```
+
+## 응답 (Response)
+
+```
+Status-Line
+*(( general-header | response-header | entity-header ) CRLF)
+CRLF
+[ message-body ]
+```
+
+### 응답의 구성
+
+```
+{버전} {상태 코드} {사유 구절}
+{헤더}
+
+{메세지 본문}
+```
+
+### Sample
+
+``` http
+HTTP/1.0 200 OK
+Server: SimpleHTTP/0.6 Python/2.7.16
+Date: Wed, 23 Jan 2019 01:31:56 GMT
+Content-type: text/html
+Content-Length: 309
+Last-Modified: Wed, 23 Jan 2019 01:30:43 GMT
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello, Rookies</title>
+    </head>
+    <body>
+        <h3> Hello </h3>
+        <p> Hello, Rookies. </p>
+        <p>
+            <a href="http://www.nhn.com">
+                <img src="images/nhn_logo.png" />
+            </a>
+        </p>
+    </body>
+</html>
+```
+
+## Response 첫 줄
+
+### Status-Line
+
+```
+{버전} {상태 코드} {사유 구절}
+HTTP/1.0 200 OK
+```
+
+### 버전
+
+* HTTP/1.0, HTTP/1.1, HTTP/2
+
+### 상태 코드 (Status Code)
+
+* 1xx: Informational
+* 2xx: Success
+* 3xx: Redirection
+* 4xx: Client Error
+* 5xx: Server Error
+
+### 사유 구절 (Reason Phrase)
+
+* 200 OK
+* 404 Not Found
+* 500 Internal Server Error
+
+## 주요 상태 코드 (Status Code)
+
+* Status-Line
+
+```
+HTTP/1.0 200 OK
+```
+
+### 1xx : Information
+
+* Request received, continuing process
+* 100 Continue
+* 101 Switching Protocols
+
+### 2xx: Success
+
+* The action was successfully received, understood, and accepted
+* ```200 OK```
+* 201 Created
+* 202 Accepted
+* 204 No Content
+* 205 Reset Content
+* 206 Partial Content
+
+### 3xx: Redirection
+
+* Further action must be taken in order to complete the request
+* 300 Multiple Choices
+* ```301 Moved Permanently```
+* ```302 Found```
+* 303 See Other
+* 304 Not Modified
+* 305 Use Proxy
+* 307 Temporary Redirect
+* 308 Permanent Redirect
+
+### 4xx: Client Error
+
+* The request contains bad syntax or cannot be fulfilled
+* 400 Bad Request
+* ```401 Unauthorized```
+* 402 Payment Required
+* ```403 Forbidden```
+* ```404 Not Found```
+* ```405 Method Not Allowed```
+* 406 Not Acceptable
+* 407 Proxy Authentication Required
+* 408 Request Timeout
+* 410 Gone
+* 411 Length Required
+* 412 Precondition Failed
+* 415 Unsupported Media Type
+
+### 5xx: Server Error
+
+* The server failed to fulfill an apparently valid request
+* ```500 Internal Server Error```
+* 501 Not Implemented
+* 502 Bad Gateway
+* ```503 Service Unavaliable```
+* 504 Gateway Timeout
+* 505 HTTP Version Not Surpported
+
+## 헤더(Http Headers)
+
+* Request
+
+```
+{HTTP 메서드} {요청 URL} {HTTP 버전}
+{{헤더}}
+
+{메세지 본문}
+```
+
+* Response
+
+```
+{HTTP 버전} {상태 코드} {사유 구절}
+{{헤더}}
+
+{메세지 본문}
+```
+
+### 일반 헤더 (Genenral headers)
+
+* 클라이언트 서버 양 쪽에서 모두 사용
+    * 예) `Date: Wed, 23 Jan 2019 02:02:53 GMT`
+* 주요 헤더
+    * Date
+    * ```Conntection```
+    * ```Cache-Control```
+    * Pragma
+    * ```Transfer-Encoding```
+    * Upgrade
+    * Trailer
+
+### 요청 헤더 (Request headers)
+
+* 클라이언트에서 사용
+    * 예) `Host: 127.0.0.1:11000`
+* 주요 헤더
+    * Client-IP
+    * ```Host``` : HTTP/1.1 필수 헤더
+    * ```Referer```
+    * ```User-Agent```
+    * ```Cookie```
+    * ```Accept```
+    * ```Accept-Charset```
+    * ```Accept-Encoding```
+    * ```Accept-Language```
+    * Authorization
+    * Expect
+    * If-Match
+    * If-Modified-Since
+    * If-None-Match
+    * If-Range
+    * If-Unmodified-Since
+
+### 응답 헤더 (Response headers)
+
+* 서버에서 사용
+    * 예) `Server: SimpleHTTP/0.6 Python/2.7.16`
+* 주요헤더
+    * Server
+    * ```Location```
+    * ```Set-Cookie```
+
+### 엔티티 헤더 (Entity headers)
+
+* 메세지 본문에 대한 헤더
+    * 예) `Content-type: text/html`
+* 주요 헤더
+    * Allow
+    * ```Content-Type```
+    * ```Content-Length```
+    * Content-Encoding
+    * Content-Language
+    * Content-Location
+    * Content-MD5
+    * Content-Range
+    * ETag
+    * ```Expires```
+    * ```Last-Modified```
+
+### 사용자 정의 헤더 (Custom headers)
+
+* 사용자 임의 지정 헤더 : RFC 6648에서 폐기
+    * 'X-' prefix
+    * 예) `X-Forwarded-For: 10,78.9.157, 127.0.0.1`
+    * 폐기했지만 사실상 폐기되지 않고 사용중
+* 주요 헤더
+    * X-Forwarded-For
+    * X-Forwarded-Host
+    * X-Forwarded-Proto
+    * X-Frame-Options
+    * X-Content-Type-Options
+
+## 헤더 데모
+
+### 302 Found
+
+```
+$ nc -l 10000
+```
+
+### 응답
+
+```
+HTTP/1.1 302 Found
+Location: https://www.payco.com
+```
+
+* payco 홈페이지로 감
+
+## 메세지 본문
+
+* Request
+
+```
+{HTTP 메서드} {요청 URL} {HTTP 버전}
+{헤더}
+
+{{메세지 본문}}
+```
+
+* Response
+
+```
+{HTTP 버전} {상태 코드} {사유 구절}
+{헤더}
+
+{{메세지 본문}}
+```
+
+## GET vs. POST
+
+### GET
+
+* 자원을 요청하기 위한 메서드
+
+### POST
+
+* 서버에 입력 데이터를 전송하기 위한 메서드
+* 주로 HTML 폼을 사용하기 위하여 많이 사용됨
+
+## GET
+
+* http://127.0.0.1:11000/form-get.html
+
+``` html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello, Rookies</title>
+    </head>
+    <body>
+        <h3> GET </h3>
+        <form action="http://127.0.0.1:10000/ok.html" method="GET" >
+          name: <br/>
+          <input type="text"     name="name"   ><br/>
+          content: <br/>
+          <input type="textarea" name="content"><br/>
+          <input type="submit"   name="send" value="send">
+        </form>
+    </body>
+</html>
+```
+
+### 주소창
+
+```
+http://127.0.0.1:10000/ok.html?name=TEST-name&content=TEST-content&send=send
+```
+
+### 실제 요청
+
+``` http
+GET /ok.html?name=TEST-name&content=TEST-content&send=send HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Referer: http://127.0.0.1:11000/form-get.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7
+```
+
+## POST
+
+* http://127.0.0.1:11000/form-post.html
+
+``` html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello, Rookies</title>
+    </head>
+    <body>
+        <h3> POST </h3>
+        <form action="http://127.0.0.1:10000/ok.html" method="POST">
+          name: <br/>
+          <input type="text"     name="name"   ><br/>
+          content: <br/>
+          <input type="textarea" name="content"><br/>
+          <input type="submit"   name="send" value="send">
+        </form>
+    </body>
+</html>
+```
+
+### 주소창
+
+```
+http://127.0.0.1:10000/ok.html
+```
+
+### 실제 요청
+
+``` http
+POST /ok.html HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+Content-Length: 45
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+Origin: http://127.0.0.1:10000
+Content-Type: application/x-www-form-urlencoded
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Referer: http://127.0.0.1:11000/form-post.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7
+
+name=TEST-name&content=TEST-content&send=send
+```
+
+* GET과 달리 body에 content가 들어감
+
+## GET / POST
+
+* 메서드 : GET vs. POST
+* 요청 URL:
+    * GET : `/ok.html?name=TEST-NAME&content=TEST-CONTENT&send=send`
+    * POST : `/ok.html`
+* 헤더
+    * GET: `Content-Type`, `Content-Length` 헤더 없음
+    * POST: `Content-Type: application/x-www-form-urlencoded`, `Content-Length: 45`
+
+### GET과 POST의 차이
+
+* GET, POST는 만들어진 목적이 다름
+* GET은 전송 데이터 길이에 제한이 있음. 웹브라우저 마다 다름
+
+# Cookie / Session
+
+## HTTP 특징
+
+### Connectionless
+
+### Stateless
+
+* 인증을 했는데, 알 수 없음
+
+## 쿠키 (Cookie)
+
+* RFC 6265 [HTTP State Management Mechanism](https://tools.ietf.org/html/rfc6265)
+* 서버가 클라이언트에 붙여둔 일종의 스티커(?)
+* 서버가 클라이언트에게 쿠키를 세팅 요청(`Set-Cookie:`) 하면 (스티커를 붙이면),
+* 클라이언트는 이후 서버에게 보내는 요청 헤더에 쿠키(`Cookie:`)를 표시해서 전송 (스티커를 붙인 채 다시 돌아와야 함)
+* https://meetup.toast.com/posts/172
+
+## 쿠키 종류
+
+### 세션 쿠키 (Session Cookie)
+
+* 사용자가 브라우저를 사용하는 동안만 유효함
+* 브라우저는 사용자가 브라우저를 사용하는 동안 Cookie 정보를 서버로 전달
+
+### 영구 쿠키 (Persistent Cookie)
+
+* 사용자가 브라우저를 종료하더라도 유지되는 쿠키
+* `Expires` 혹은 `Max-Age` 가 같이 설정되는 쿠키
+    * 10년 이상 설정해서 사실상 영구적으로 구현하기도 함
+
+## 쿠키 동작 방법
+
+``` uml
+Browser -> WebServer: GET /index.html HTTP/1.1\nHost: 127.0.0.1
+WebServer -> Browser: HTTP/1.0 200 OK\nSet-cookie: name=guest; domain="127.0.0.1"\nContent-Type: text/html\nContent-Length: 5\n\nHELLO
+Browser -> WebServer: GET /index.html HTTP/1.1\nHost: 127.0.0.1\nCookie: name=guest
+```
+
+### 웹브라우저 => 웹서버
+
+``` http
+GET /index.html HTTP/1.1
+Host: 127.0.0.1
+```
+
+### 웹브라우저 <= 웹서버
+
+``` http
+HTTP/1.0 200 OK
+Set-cookie: name=guest; domain="127.0.0.1"
+Content-Type: text/html
+Content-Length: 5
+
+HELLO
+```
+
+### 웹브라우저 => 웹서버
+
+``` http
+GET /index.html HTTP/1.1
+Host: 127.0.0.1
+Cookie: name=guest
+```
+
+## 쿠키 데모
+
+### Set-Cookie
+
+```
+$ nc -l 10000
+```
+
+**Response**
+
+``` http
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: 5
+Set-Cookie: name=guest
+
+HELLO
+```
+
+### 크롬에서 쿠키 확인
+
+* 개발자도구
+    * Application > Storage > Cookies
+
+## 쿠키 Set-Cookie
+
+### Set-Cookie
+
+```
+Set-Cookie: <cookie-name>=<cookie-value>
+Set-Cookie: <cookie-name>=<cookie-value>; Expires=<date>
+Set-Cookie: <cookie-name>=<cookie-value>; Max-Age=<non-zero-digit>
+Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value>
+Set-Cookie: <cookie-name>=<cookie-value>; Path=<path-value>
+Set-Cookie: <cookie-name>=<cookie-value>; Secure
+Set-Cookie: <cookie-name>=<cookie-value>; HttpOnly
+```
+
+* Expires: 만료 날짜 및 시간을 표시
+* Max-Age: 만료까지 남은 `초`를 표시
+* Domain: 쿠키를 사용할 도메인을 설정
+    * 같은 도메인 내에서는 쿠키를 공유할 수 있음
+* Path: 쿠키를 사용할 Path 를 설정
+* Secure: `https` 커넥션인 경우에만 `Cookie` 로 전달
+* HttpOnly: javascript 에서 접근하지 못하도록 설정
+    * javascript에서 document.cookie로 쿠키를 확인할 수 있음
+
+## 쿠키 사용 사례
+
+### 세션 관리 (Session Management)
+
+* 사용자 인증, 장바구니
+
+### 개인화 (Personalization)
+
+* 브라우저 테마, 비로그인 기반의 서비스
+
+### 사용자 추적 (Tracking)
+
+* 비로그인 광고 서비스에서 주로 사용
+
+## 쿠키의 위험성
+
+* 로그인 관련 정보를 쿠키에만 넣어둔다면?
+    * `Set-Cookie: id=godes`
+    * `Cookie: id=godes`
+* 클라이언트에서 쿠키정보를 위변조할 위험성 내포
+
+## 세션 (Session)
+
+* 쿠키의 위험성을 보완하기 위해서 쿠키 정보를 서버에 저장
+* 사용자 접속 시점에 임의의 `세션 식별자`(세션 ID) 를 발급
+    * `세션 식별자` 만으로는 사용자 개인 정보를 추측해 낼 수 없는 형태여야 함.
+        * HttpOnly와 Secure 옵션을 사용해야함
+* 해당 `세션 식별자`를 키로 하여 서버 저장소에 필요한 정보를 저장. (DB or Cache 등 모두 가능)
+
+
+## 세션 동작 방법
+
+``` uml
+Browser -> WebServer: GET /index.html HTTP/1.0
+WebServer -> "Storage (DB or Cache)": Set SESSION-ID: "1234" + Data
+WebServer -> Browser: HTTP/1.0 200 OK\nSet-Cookie: SESSION-ID: "1234"
+Browser -> WebServer: GET /index.html HTTP/1.0\nCookie: SESSION-ID: "1234"
+WebServer -> "Storage (DB or Cache)": Get SESSION-ID: "1234"
+WebServer <- "Storage (DB or Cache)":  SESSION-ID: "1234" 의 Data
+```
+
+## 참고
+* NHN Basecamp
