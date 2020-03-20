@@ -2,7 +2,7 @@
 layout: post
 title:  "@Transactional"
 date:   2020-02-12 18:00:00 +0900
-categories: Rookie7
+categories: Spring
 ---
 
 # AOP

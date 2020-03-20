@@ -741,4 +741,4 @@ sudo apps/httpd/bin/apachectl start
 
 
 ## 참고
-* NHN Basecamp
+* NHN 기술교육 - bash tutorial

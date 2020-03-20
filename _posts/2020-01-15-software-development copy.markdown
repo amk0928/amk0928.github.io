@@ -97,4 +97,4 @@ categories: Rookie7
 
 
 ## 참고
-* NHN Basecamp
+* NHN 기술교육 -기민한 소프트웨어 개발과 일정 추정

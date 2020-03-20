@@ -359,4 +359,4 @@ element.childNodes // 자식들을 모두 담고 있는 HTMLCollection
 ```
 
 ## 참고
-* NHN Basecamp
+* NHN 기술교육 - JavaScript 기초

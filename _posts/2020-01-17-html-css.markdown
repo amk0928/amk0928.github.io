@@ -390,4 +390,4 @@ categories: Rookie7
 
 
 ## 참고
-* NHN Basecamp
+* NHN 기술교육 - HTML/CSS 기초

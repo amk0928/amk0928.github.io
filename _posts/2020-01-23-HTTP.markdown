@@ -781,4 +781,4 @@ WebServer <- "Storage (DB or Cache)":  SESSION-ID: "1234" 의 Data
 ```
 
 ## 참고
-* NHN Basecamp
+* NHN 기술교육 - HTTP의 이해

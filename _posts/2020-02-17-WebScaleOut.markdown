@@ -182,4 +182,4 @@ categories: Rookie7
 
 
 ## 참고
-* NHN Basecamp
+* NHN 기술교육 - 웹 서버 스케일 아웃, DB 샤딩
